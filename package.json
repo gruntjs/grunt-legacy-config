@@ -32,5 +32,13 @@
   "keywords": [
     "config",
     "grunt"
-  ]
+  ],
+  "dependencies": {
+    "grunt": "^0.4.5"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.4",
+    "should": "^6.0.1",
+    "verb": "0.7.0"
+  }
 }
