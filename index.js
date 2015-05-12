@@ -1,7 +1,7 @@
 /*
- * grunt <http://gruntjs.com/>
+ * grunt-legacy-config <http://gruntjs.com/grunt-legacy-config>
  *
- * Copyright (c) 2015 "Cowboy" Ben Alman
+ * Copyright (c) 2013-2015, "Cowboy" Ben Alman.
  * Licensed under the MIT license.
  */
 
