@@ -31,8 +31,8 @@ _(Nothing yet.)_
 _(loosely in this order...)_
 
 * [x] migrate code
-* [ ] migrate tests
-* [ ] get tests passing with 100% parity
+* [x] migrate tests
+* [x] get tests passing with 100% parity
 * [ ] coverage reports
 * [ ] API documentation, written as code comments
 * [ ] Add the event to the changelogs of both libraries
@@ -68,7 +68,7 @@ Pull requests and stars are always welcome. For bugs and feature requests, [plea
 
 ## License
 
-Copyright (c) 2015 Cowboy
+Copyright (c) 2015 "Cowboy" Ben Alman
 Released under the MIT license.
 
 ***
