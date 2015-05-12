@@ -1,0 +1,35 @@
+{
+  "name": "grunt-legacy-config",
+  "description": "Grunt's config methods, as a standalone library.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/gruntjs/grunt-legacy-config",
+  "author": {
+    "name": "\"Cowboy\" Ben Alman",
+    "url": "http://benalman.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/gruntjs/grunt-legacy-config.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gruntjs/grunt-legacy-config/issues"
+  },
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/gruntjs/grunt-legacy-config/blob/master/LICENSE"
+  },
+  "files": [
+    "index.js"
+  ],
+  "main": "index.js",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "config",
+    "grunt"
+  ]
+}
