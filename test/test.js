@@ -1,7 +1,7 @@
 /*!
- * grunt-legacy-config <https://github.com/gruntjs/grunt-legacy-config>
+ * grunt <http://gruntjs.com/>
  *
- * Copyright (c) 2015 "Cowboy" Ben Alman.
+ * Copyright (c) 2013-2015 "Cowboy" Ben Alman.
  * Licensed under the MIT license.
  */
 
@@ -10,14 +10,14 @@
 /* deps:mocha */
 var assert = require('assert');
 var grunt = require('grunt');
-var config = require('./');
+var config = require('../');
 
 describe('config', function () {
   beforeEach(function(done) {
     this.origData = config.data;
 
     config.init({
-      meta: grunt.file.readJSON('fixtures/test.json'),
+      meta: grunt.file.readJSON('test/fixtures/test.json'),
       foo: '<%= meta.foo %>',
       foo2: '<%= foo %>',
       obj: {
