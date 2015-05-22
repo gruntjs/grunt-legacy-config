@@ -22,6 +22,8 @@ var config = require('grunt-legacy-config');
 
 ## API
 
+Visit the [grunt API documentation](http://gruntjs.com/api) for more info about [grunt.config](http://gruntjs.com/api/grunt.config).
+
 ### [config](index.js#L25)
 
 Get/set config data. If value was passed, set. Otherwise, get.
