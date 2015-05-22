@@ -16,9 +16,6 @@ exports.create = function(options) {
   /**
    * Get/set config data. If value was passed, set. Otherwise, get.
    *
-   * ```js
-   * config([prop [, value]]);
-   * ```
    * @name config
    * @param  {String} `prop`
    * @param  {*} `value`
@@ -46,10 +43,6 @@ exports.create = function(options) {
    * Escape any `.` in the given `propString` with `\.` This should be used for
    * property names that contain dots.
    *
-   * ```js
-   * config.escape('foo.js');
-   * //=> 'foo\.js'
-   * ```
    * @param  {String} `str` String with `.`s to escape
    * @return {String}
    * @api public
@@ -62,11 +55,6 @@ exports.create = function(options) {
   /**
    * Return prop as a string. If an array is passed, a dot-notated
    * string will be returned.
-   *
-   * ```js
-   * config.getPropString(['a', 'b']);
-   * //=> 'a.b'
-   * ```
    *
    * @param  {String|Array} `prop`
    * @return {String}
@@ -81,9 +69,6 @@ exports.create = function(options) {
    * Get a raw value from the project's Grunt configuration,
    * without processing `<% %>` template strings.
    *
-   * ```js
-   * config.getRaw([prop]);
-   * ```
    * @param  {String} `prop` The name of the property to get.
    * @return {*} Returns the value of the given property.
    * @api public
@@ -111,11 +96,6 @@ exports.create = function(options) {
    * Get a value from the project's Grunt configuration, recursively
    * processing templates.
    *
-   * ```js
-   * config.set('a', 'b');
-   * var foo = config.get('a');
-   * //=> 'b'
-   * ```
    * @param  {String} `prop`
    * @return {*} Returns the value of `prop`
    * @api public
@@ -129,15 +109,6 @@ exports.create = function(options) {
    * Expand a config value recursively. Used for post-processing
    * raw values already retrieved from the config.
    *
-   * ```js
-   * config.set('a', 'b');
-   * config.set('x', 'z');
-   *
-   * var foo = config.process('<%= a %>');
-   * //=> 'b'
-   * var bar = config.process(['<%= a %>', '<%= x %>']);
-   * //=> ['a', 'z']
-   * ```
    * @param  {String} `str`
    * @return {*} Resolved config values.
    * @api public
@@ -165,9 +136,6 @@ exports.create = function(options) {
   /**
    * Set a value onto the project's Grunt configuration.
    *
-   * ```js
-   * config.set(prop, value);
-   * ```
    * @param {String} `prop` The property name.
    * @param {*} `value` The value of the specified property
    * @api public
@@ -181,21 +149,6 @@ exports.create = function(options) {
    * Recursively merge properties of the specified `configObject`
    * into the current project configuration.
    *
-   * ```js
-   * config.init({
-   *   jshint: {
-   *     src: ['*.js']
-   *   }
-   * });
-   *
-   * // merge the following properties from the `jshint` object onto
-   * // the `jshint` object in the above config
-   * config.merge({
-   *   jshint: {
-   *     options: {...}
-   *   }
-   * });
-   * ```
    * @param  {Object} `obj` The object to merge onto the project config.
    * @return {Object} Returns `config.data`
    * @api public
@@ -212,9 +165,6 @@ exports.create = function(options) {
    *
    * Nearly every project's `Gruntfile.js` will call this method.
    *
-   * ```js
-   * config.init(configObject);
-   * ```
    * @param  {Object} `obj` The object to initialize.
    * @return {Object}
    */
@@ -230,9 +180,6 @@ exports.create = function(options) {
    * throw an exception (use this inside of a task). One or more
    * config property names may be specified.
    *
-   * ```js
-   * config.requires(prop [, prop [, ...]]);
-   * ```
    * @param  {String|Array} `props` Property name as a string or array of property names.
    * @return {*}
    * @api public

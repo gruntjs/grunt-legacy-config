@@ -1,4 +1,4 @@
-# grunt-legacy-config [![NPM version](https://badge.fury.io/js/grunt-legacy-config.svg)](http://badge.fury.io/js/grunt-legacy-config) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+# grunt-legacy-config [![NPM version](https://badge.fury.io/js/grunt-legacy-config.svg)](http://badge.fury.io/js/grunt-legacy-config)  [![Build Status](https://travis-ci.org/gruntjs/grunt-legacy-config.svg)](https://travis-ci.org/gruntjs/grunt-legacy-config)  [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
 > Grunt's config methods, as a standalone library.
 
@@ -17,170 +17,102 @@ $ npm i grunt-legacy-config --save-dev
 ## Usage
 
 ```js
-var config = require('grunt-legacy-config');
+var config = require('grunt-legacy-config').create();
 ```
 
 ## API
 
 Visit the [grunt API documentation](http://gruntjs.com/api) for more info about [grunt.config](http://gruntjs.com/api/grunt.config).
 
-### [config](index.js#L25)
+### [config](index.js#L26)
 
 Get/set config data. If value was passed, set. Otherwise, get.
 
 **Params**
 
 * `prop` **{String}**
-* `value` **{*}**
+* `value` __{_}_*
 * `returns` **{String}**
 
-**Example**
+### [.escape](index.js#L51)
 
-```js
-config([prop [, value]]);
-```
-
-### [.escape](index.js#L54)
-
-Escape any `.` in the given `propString` with `\.` This should be used for property names that contain dots.
+Escape any `.` in the given `propString` with `\.` This should be used for
+property names that contain dots.
 
 **Params**
 
 * `str` **{String}**: String with `.`s to escape
 * `returns` **{String}**
 
-**Example**
+### [.getPropString](index.js#L64)
 
-```js
-config.escape('foo.js');
-//=> 'foo\.js'
-```
-
-### [.getPropString](index.js#L72)
-
-Return prop as a string. If an array is passed, a dot-notated string will be returned.
+Return prop as a string. If an array is passed, a dot-notated
+string will be returned.
 
 **Params**
 
 * `prop` **{String|Array}**
 * `returns` **{String}**
 
-**Example**
+### [.getRaw](index.js#L77)
 
-```js
-config.getPropString(['a', 'b']);
-//=> 'a.b'
-```
-
-### [.getRaw](index.js#L88)
-
-Get a raw value from the project's Grunt configuration, without processing `<% %>` template strings.
+Get a raw value from the project's Grunt configuration,
+without processing `<% %>` template strings.
 
 **Params**
 
 * `prop` **{String}**: The name of the property to get.
-* `returns` **{*}**: Returns the value of the given property.
+* `returns` __{_}_*: Returns the value of the given property.
 
-**Example**
+### [.get](index.js#L104)
 
-```js
-config.getRaw([prop]);
-```
-
-### [.get](index.js#L120)
-
-Get a value from the project's Grunt configuration, recursively processing templates.
+Get a value from the project's Grunt configuration, recursively
+processing templates.
 
 **Params**
 
 * `prop` **{String}**
-* `returns` **{*}**: Returns the value of `prop`
+* `returns` __{_}_*: Returns the value of `prop`
 
-**Example**
+### [.process](index.js#L117)
 
-```js
-config.set('a', 'b');
-var foo = config.get('a');
-//=> 'b'
-```
-
-### [.process](index.js#L142)
-
-Expand a config value recursively. Used for post-processing raw values already retrieved from the config.
+Expand a config value recursively. Used for post-processing
+raw values already retrieved from the config.
 
 **Params**
 
 * `str` **{String}**
-* `returns` **{*}**: Resolved config values.
+* `returns` __{_}_*: Resolved config values.
 
-**Example**
-
-```js
-config.set('a', 'b');
-config.set('x', 'z');
-
-var foo = config.process('<%= a %>');
-//=> 'b'
-var bar = config.process(['<%= a %>', '<%= x %>']);
-//=> ['a', 'z']
-```
-
-### [.set](index.js#L172)
+### [.set](index.js#L144)
 
 Set a value onto the project's Grunt configuration.
 
 **Params**
 
 * `prop` **{String}**: The property name.
-* `value` **{*}**: The value of the specified property
+* `value` __{_}_*: The value of the specified property
 
-**Example**
+### [.merge](index.js#L157)
 
-```js
-config.set(prop, value);
-```
-
-### [.merge](index.js#L200)
-
-Recursively merge properties of the specified `configObject` into the current project configuration.
+Recursively merge properties of the specified `configObject`
+into the current project configuration.
 
 **Params**
 
 * `obj` **{Object}**: The object to merge onto the project config.
 * `returns` **{Object}**: Returns `config.data`
 
-**Example**
+### [.requires](index.js#L188)
 
-```js
-config.init({
-  jshint: {
-    src: ['*.js']
-  }
-});
-
-// merge the following properties from the `jshint` object onto
-// the `jshint` object in the above config
-config.merge({
-  jshint: {
-    options: {...}
-  }
-});
-```
-
-### [.requires](index.js#L237)
-
-Test to see if required config params have been defined. If not, throw an exception (use this inside of a task). One or more config property names may be specified.
+Test to see if required config params have been defined. If not,
+throw an exception (use this inside of a task). One or more
+config property names may be specified.
 
 **Params**
 
 * `props` **{String|Array}**: Property name as a string or array of property names.
-* `returns` **{*}**
-
-**Example**
-
-```js
-config.requires(prop [, prop [, ...]]);
-```
+* `returns` __{_}_*
 
 ## TODO
 
@@ -232,9 +164,11 @@ Pull requests and stars are always welcome. For bugs and feature requests, [plea
 
 ## License
 
-Copyright (c) 2015 "Cowboy" Ben Alman
+Copyright © 2015 "Cowboy" Ben Alman
 Released under the MIT license.
 
 ***
 
-_This file was generated by [verb-cli](https://github.com/assemble/verb-cli) on May 14, 2015._
+_This file was generated by [verb-cli](https://github.com/assemble/verb-cli) on May 22, 2015._
+
+<!-- deps: verb -->
