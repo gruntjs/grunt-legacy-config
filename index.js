@@ -7,7 +7,7 @@
 
 'use strict';
 
-var util = require('grunt-legacy-util');
+var legacyUtil = require('grunt-legacy-util');
 var _ = require('lodash');
 
 exports.create = function(options) {
@@ -77,7 +77,7 @@ exports.create = function(options) {
   config.getRaw = function(prop) {
     if (prop) {
       // Prop was passed, get that specific property's value.
-      return util.namespace.get(config.data, config.getPropString(prop));
+      return legacyUtil.namespace.get(config.data, config.getPropString(prop));
     } else {
       // No prop was passed, return the entire config.data object.
       return config.data;
@@ -115,7 +115,7 @@ exports.create = function(options) {
    */
 
   config.process = function(raw) {
-    return util.recurse(raw, function(value) {
+    return legacyUtil.recurse(raw, function(value) {
       // If the value is not a string, return it.
       if (typeof value !== 'string') { return value; }
       // If possible, access the specified property via config.get, in case it
@@ -142,7 +142,7 @@ exports.create = function(options) {
    */
 
   config.set = function(prop, value) {
-    return util.namespace.set(config.data, config.getPropString(prop), value);
+    return legacyUtil.namespace.set(config.data, config.getPropString(prop), value);
   };
 
   /**
@@ -186,7 +186,7 @@ exports.create = function(options) {
    */
 
   config.requires = function() {
-    var p = util.pluralize;
+    var p = legacyUtil.pluralize;
     var props = _.toArray(arguments).map(config.getPropString);
     var msg = 'Verifying propert' + p(props.length, 'y/ies') +
       ' ' + options.log.wordlist(props) + ' exist' + p(props.length, 's') +
@@ -204,9 +204,9 @@ exports.create = function(options) {
       options.verbose.or.write(msg);
       options.log.error().error('Unable to process task.');
       if (!config.data) {
-        throw util.error('Unable to load config.');
+        throw legacyUtil.error('Unable to load config.');
       } else {
-        throw util.error('Required config propert' +
+        throw legacyUtil.error('Required config propert' +
           p(failProps.length, 'y/ies') + ' ' + failProps.join(', ') + ' missing.');
       }
     }
