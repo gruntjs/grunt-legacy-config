@@ -13,7 +13,6 @@ module.exports = function(grunt) {
     jshint: {
       all: ['*.js', 'test/*.js'],
       options: {
-        reporter: require('jshint-stylish'),
         jshintrc: '.jshintrc'
       }
     },
