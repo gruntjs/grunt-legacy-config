@@ -15,9 +15,13 @@ var config;
 
 describe('config', function () {
   beforeEach(function(done) {
-    config = legacyConfig.create({grunt: grunt});
-    this.origData = config.data;
+    config = legacyConfig.create({
+      grunt: grunt,
+      log: grunt.log,
+      verbose: grunt.verbose
+    });
 
+    this.origData = config.data;
     config.init({
       meta: grunt.file.readJSON('test/fixtures/test.json'),
       foo: '<%= meta.foo %>',

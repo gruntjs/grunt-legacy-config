@@ -7,9 +7,11 @@
 
 'use strict';
 
+var util = require('grunt-legacy-util');
+var _ = require('lodash');
+
 exports.create = function(options) {
-  options = options || {};
-  var grunt = options.grunt || null;
+  options = _.extend({}, {grunt: null, log: null}, options);
 
   /**
    * Get/set config data. If value was passed, set. Otherwise, get.
@@ -90,7 +92,7 @@ exports.create = function(options) {
   config.getRaw = function(prop) {
     if (prop) {
       // Prop was passed, get that specific property's value.
-      return grunt.util.namespace.get(config.data, config.getPropString(prop));
+      return util.namespace.get(config.data, config.getPropString(prop));
     } else {
       // No prop was passed, return the entire config.data object.
       return config.data;
@@ -142,7 +144,7 @@ exports.create = function(options) {
    */
 
   config.process = function(raw) {
-    return grunt.util.recurse(raw, function(value) {
+    return util.recurse(raw, function(value) {
       // If the value is not a string, return it.
       if (typeof value !== 'string') { return value; }
       // If possible, access the specified property via config.get, in case it
@@ -156,7 +158,7 @@ exports.create = function(options) {
         if (result != null) { return result; }
       }
       // Process the string as a template.
-      return grunt.template.process(value, {data: config.data});
+      return options.grunt.template.process(value, {data: config.data});
     });
   };
 
@@ -172,7 +174,7 @@ exports.create = function(options) {
    */
 
   config.set = function(prop, value) {
-    return grunt.util.namespace.set(config.data, config.getPropString(prop), value);
+    return util.namespace.set(config.data, config.getPropString(prop), value);
   };
 
   /**
@@ -200,7 +202,7 @@ exports.create = function(options) {
    */
 
   config.merge = function(obj) {
-    grunt.util._.merge(config.data, obj);
+    _.merge(config.data, obj);
     return config.data;
   };
 
@@ -218,7 +220,7 @@ exports.create = function(options) {
    */
 
   config.init = function(obj) {
-    grunt.verbose.write('Initializing config...').ok();
+    options.verbose.write('Initializing config...').ok();
     // Initialize and return data.
     return (config.data = obj || {});
   };
@@ -237,27 +239,27 @@ exports.create = function(options) {
    */
 
   config.requires = function() {
-    var p = grunt.util.pluralize;
-    var props = grunt.util.toArray(arguments).map(config.getPropString);
+    var p = util.pluralize;
+    var props = _.toArray(arguments).map(config.getPropString);
     var msg = 'Verifying propert' + p(props.length, 'y/ies') +
-      ' ' + grunt.log.wordlist(props) + ' exist' + p(props.length, 's') +
+      ' ' + options.log.wordlist(props) + ' exist' + p(props.length, 's') +
       ' in config...';
-    grunt.verbose.write(msg);
+    options.verbose.write(msg);
     var failProps = config.data && props.filter(function(prop) {
       return config.get(prop) == null;
     }).map(function(prop) {
       return '"' + prop + '"';
     });
     if (config.data && failProps.length === 0) {
-      grunt.verbose.ok();
+      options.verbose.ok();
       return true;
     } else {
-      grunt.verbose.or.write(msg);
-      grunt.log.error().error('Unable to process task.');
+      options.verbose.or.write(msg);
+      options.log.error().error('Unable to process task.');
       if (!config.data) {
-        throw grunt.util.error('Unable to load config.');
+        throw util.error('Unable to load config.');
       } else {
-        throw grunt.util.error('Required config propert' +
+        throw util.error('Required config propert' +
           p(failProps.length, 'y/ies') + ' ' + failProps.join(', ') + ' missing.');
       }
     }
