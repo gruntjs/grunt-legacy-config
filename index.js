@@ -7,11 +7,26 @@
 
 'use strict';
 
+/**
+ * Module dependencies
+ */
+
 var legacyUtil = require('grunt-legacy-util');
+var logUtils = require('grunt-legacy-log-utils');
+var Template = require('grunt-legacy-template').Template;
+var logger = require('grunt-legacy-event-logger/lib/facade');
 var _ = require('lodash');
 
+/**
+ * Initialize config with the given `options`.
+ *
+ * @param  {Object|Function} `options` Options can be an object or a function for getting/setting properties on `config.options`.
+ * @return {Object}
+ * @api public
+ */
+
 exports.create = function(options) {
-  options = _.extend({}, {grunt: null, log: null}, options);
+  var template = new Template(options);
 
   /**
    * Get/set config data. If value was passed, set. Otherwise, get.
@@ -34,17 +49,23 @@ exports.create = function(options) {
   };
 
   /**
+   * Event logger
+   */
+
+  config.log = logger.logMethodsToEvents();
+
+  /**
    * The actual `config.data` object.
    */
 
   config.data = {};
 
   /**
-   * Escape any `.` in the given `propString` with `\.` This should be used for
-   * property names that contain dots.
+   * Escape any `.` in the given `propString` with a backslash (ex: `\.`)
+   * This should be used for property names that contain dots.
    *
    * @param  {String} `str` String with `.`s to escape
-   * @return {String}
+   * @return {String} Returns a string with all dots escaped.
    * @api public
    */
 
@@ -53,7 +74,7 @@ exports.create = function(options) {
   };
 
   /**
-   * Return prop as a string. If an array is passed, a dot-notated
+   * Return `prop` as a string. If an array is passed, a dot-notated
    * string will be returned.
    *
    * @param  {String|Array} `prop`
@@ -85,14 +106,6 @@ exports.create = function(options) {
   };
 
   /**
-   * Match `<%= FOO %>` where FOO is a propString,
-   * eg. `foo` or `foo.bar` but not a method call like
-   * `foo()` or `foo.bar()`.
-   */
-
-  var propStringTmplRe = /^<%=\s*([a-z0-9_$]+(?:\.[a-z0-9_$]+)*)\s*%>$/i;
-
-  /**
    * Get a value from the project's Grunt configuration, recursively
    * processing templates.
    *
@@ -104,6 +117,13 @@ exports.create = function(options) {
   config.get = function(prop) {
     return config.process(config.getRaw(prop));
   };
+
+  /**
+   * Match `<%= FOO %>` where FOO is a propString, eg. `foo`
+   * or `foo.bar` but not a method call like `foo()` or `foo.bar()`.
+   */
+
+  var propStringTmplRe = /^<%=\s*([a-z0-9_$]+(?:\.[a-z0-9_$]+)*)\s*%>$/i;
 
   /**
    * Expand a config value recursively. Used for post-processing
@@ -124,12 +144,12 @@ exports.create = function(options) {
       var result;
       if (matches) {
         result = config.get(matches[1]);
-        // If the result retrieved from the config data wasn't null or undefined,
-        // return it.
+        // If the result retrieved from the config data
+        // wasn't null or undefined, return it.
         if (result != null) { return result; }
       }
       // Process the string as a template.
-      return options.grunt.template.process(value, {data: config.data});
+      return template.process(value, {data: config.data});
     });
   };
 
@@ -170,7 +190,7 @@ exports.create = function(options) {
    */
 
   config.init = function(obj) {
-    options.verbose.write('Initializing config...').ok();
+    config.log.verbose.write('Initializing config...').ok();
     // Initialize and return data.
     return (config.data = obj || {});
   };
@@ -189,25 +209,24 @@ exports.create = function(options) {
     var p = legacyUtil.pluralize;
     var props = _.toArray(arguments).map(config.getPropString);
     var msg = 'Verifying propert' + p(props.length, 'y/ies') +
-      ' ' + options.log.wordlist(props) + ' exist' + p(props.length, 's') +
+      ' ' + logUtils.wordlist(props) + ' exist' + p(props.length, 's') +
       ' in config...';
-    options.verbose.write(msg);
+    config.log.verbose.write(msg);
     var failProps = config.data && props.filter(function(prop) {
       return config.get(prop) == null;
     }).map(function(prop) {
       return '"' + prop + '"';
     });
     if (config.data && failProps.length === 0) {
-      options.verbose.ok();
+      config.log.verbose.ok();
       return true;
     } else {
-      options.verbose.or.write(msg);
-      options.log.error().error('Unable to process task.');
+      config.log.verbose.or.write(msg);
+      config.log.error().error('Unable to process task.');
       if (!config.data) {
         throw legacyUtil.error('Unable to load config.');
       } else {
-        throw legacyUtil.error('Required config propert' +
-          p(failProps.length, 'y/ies') + ' ' + failProps.join(', ') + ' missing.');
+        throw legacyUtil.error('Required config propert' + p(failProps.length, 'y/ies') + ' ' + failProps.join(', ') + ' missing.');
       }
     }
   };
