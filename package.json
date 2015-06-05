@@ -30,6 +30,8 @@
   ],
   "dependencies": {
     "grunt": "^0.4.5",
+    "grunt-legacy-event-logger": "gruntjs/grunt-legacy-event-logger",
+    "grunt-legacy-log-utils": "^0.1.1",
     "grunt-legacy-util": "^0.2.0",
     "lodash": "^3.9.1"
   },
