@@ -14,7 +14,7 @@
 var legacyUtil = require('grunt-legacy-util');
 var logUtils = require('grunt-legacy-log-utils');
 var Template = require('grunt-legacy-template').Template;
-var logger = require('grunt-legacy-event-logger/lib/facade');
+var logger = require('grunt-legacy-log-facade');
 var _ = require('lodash');
 
 /**

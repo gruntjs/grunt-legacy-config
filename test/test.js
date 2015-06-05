@@ -15,11 +15,7 @@ var config;
 
 describe('config', function () {
   beforeEach(function(done) {
-    config = legacyConfig.create({
-      grunt: grunt,
-      log: grunt.log,
-      verbose: grunt.verbose
-    });
+    config = legacyConfig.create(grunt.option);
 
     this.origData = config.data;
     config.init({
