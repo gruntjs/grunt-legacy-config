@@ -29,7 +29,6 @@
     "grunt"
   ],
   "dependencies": {
-    "grunt": "^0.4.5",
     "grunt-legacy-log-facade": "gruntjs/grunt-legacy-log-facade",
     "grunt-legacy-log-utils": "^0.1.1",
     "grunt-legacy-template": "gruntjs/grunt-legacy-template#constructor",
@@ -37,6 +36,7 @@
     "lodash": "^3.9.1"
   },
   "devDependencies": {
+    "grunt": "^0.4.5",
     "grunt-contrib-jshint": "^0.11.2",
     "grunt-mocha-test": "^0.12.7",
     "mocha": "^2.2.4"
