@@ -1,4 +1,4 @@
-# grunt-legacy-config [![NPM version](https://badge.fury.io/js/grunt-legacy-config.svg)](http://badge.fury.io/js/grunt-legacy-config) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+# grunt-legacy-config [![NPM version](https://badge.fury.io/js/grunt-legacy-config.svg)](http://badge.fury.io/js/grunt-legacy-config)  [![Build Status](https://travis-ci.org/gruntjs/grunt-legacy-config.svg)](https://travis-ci.org/gruntjs/grunt-legacy-config)  [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
 > Grunt's config methods, as a standalone library.
 
@@ -17,12 +17,23 @@ $ npm i grunt-legacy-config --save-dev
 ## Usage
 
 ```js
-var config = require('grunt-legacy-config');
+var config = require('grunt-legacy-config').create();
 ```
 
 ## API
 
-### [config](index.js#L25)
+Visit the [grunt API documentation](http://gruntjs.com/api) for more info about [grunt.config](http://gruntjs.com/api/grunt.config).
+
+### [.create](index.js#L28)
+
+Initialize config with the given `options`.
+
+**Params**
+
+* `options` **{Object|Function}**: Options can be an object or a function for getting/setting properties on `config.options`.
+* `returns` **{Object}**
+
+### [config](index.js#L41)
 
 Get/set config data. If value was passed, set. Otherwise, get.
 
@@ -32,98 +43,57 @@ Get/set config data. If value was passed, set. Otherwise, get.
 * `value` **{*}**
 * `returns` **{String}**
 
-**Example**
+### [.escape](index.js#L72)
 
-```js
-config([prop [, value]]);
-```
-
-### [.escape](index.js#L54)
-
-Escape any `.` in the given `propString` with `\.` This should be used for property names that contain dots.
+Escape any `.` in the given `propString` with a backslash (ex: `\.`)
+This should be used for property names that contain dots.
 
 **Params**
 
 * `str` **{String}**: String with `.`s to escape
-* `returns` **{String}**
+* `returns` **{String}**: Returns a string with all dots escaped.
 
-**Example**
+### [.getPropString](index.js#L85)
 
-```js
-config.escape('foo.js');
-//=> 'foo\.js'
-```
-
-### [.getPropString](index.js#L72)
-
-Return prop as a string. If an array is passed, a dot-notated string will be returned.
+Return `prop` as a string. If an array is passed, a dot-notated
+string will be returned.
 
 **Params**
 
 * `prop` **{String|Array}**
 * `returns` **{String}**
 
-**Example**
+### [.getRaw](index.js#L98)
 
-```js
-config.getPropString(['a', 'b']);
-//=> 'a.b'
-```
-
-### [.getRaw](index.js#L88)
-
-Get a raw value from the project's Grunt configuration, without processing `<% %>` template strings.
+Get a raw value from the project's Grunt configuration,
+without processing `<% %>` template strings.
 
 **Params**
 
 * `prop` **{String}**: The name of the property to get.
 * `returns` **{*}**: Returns the value of the given property.
 
-**Example**
+### [.get](index.js#L117)
 
-```js
-config.getRaw([prop]);
-```
-
-### [.get](index.js#L120)
-
-Get a value from the project's Grunt configuration, recursively processing templates.
+Get a value from the project's Grunt configuration, recursively
+processing templates.
 
 **Params**
 
 * `prop` **{String}**
 * `returns` **{*}**: Returns the value of `prop`
 
-**Example**
+### [.process](index.js#L137)
 
-```js
-config.set('a', 'b');
-var foo = config.get('a');
-//=> 'b'
-```
-
-### [.process](index.js#L142)
-
-Expand a config value recursively. Used for post-processing raw values already retrieved from the config.
+Expand a config value recursively. Used for post-processing
+raw values already retrieved from the config.
 
 **Params**
 
 * `str` **{String}**
 * `returns` **{*}**: Resolved config values.
 
-**Example**
-
-```js
-config.set('a', 'b');
-config.set('x', 'z');
-
-var foo = config.process('<%= a %>');
-//=> 'b'
-var bar = config.process(['<%= a %>', '<%= x %>']);
-//=> ['a', 'z']
-```
-
-### [.set](index.js#L172)
+### [.set](index.js#L164)
 
 Set a value onto the project's Grunt configuration.
 
@@ -132,53 +102,26 @@ Set a value onto the project's Grunt configuration.
 * `prop` **{String}**: The property name.
 * `value` **{*}**: The value of the specified property
 
-**Example**
+### [.merge](index.js#L177)
 
-```js
-config.set(prop, value);
-```
-
-### [.merge](index.js#L200)
-
-Recursively merge properties of the specified `configObject` into the current project configuration.
+Recursively merge properties of the specified `configObject`
+into the current project configuration.
 
 **Params**
 
 * `obj` **{Object}**: The object to merge onto the project config.
 * `returns` **{Object}**: Returns `config.data`
 
-**Example**
+### [.requires](index.js#L208)
 
-```js
-config.init({
-  jshint: {
-    src: ['*.js']
-  }
-});
-
-// merge the following properties from the `jshint` object onto
-// the `jshint` object in the above config
-config.merge({
-  jshint: {
-    options: {...}
-  }
-});
-```
-
-### [.requires](index.js#L237)
-
-Test to see if required config params have been defined. If not, throw an exception (use this inside of a task). One or more config property names may be specified.
+Test to see if required config params have been defined. If not,
+throw an exception (use this inside of a task). One or more
+config property names may be specified.
 
 **Params**
 
 * `props` **{String|Array}**: Property name as a string or array of property names.
 * `returns` **{*}**
-
-**Example**
-
-```js
-config.requires(prop [, prop [, ...]]);
-```
 
 ## TODO
 
@@ -197,10 +140,10 @@ _(loosely in this order...)_
 
 **Next:**
 
-* [ ] replace core `grunt.config` internal module with `grunt-legacy-config`
-* [ ] remove any dependencies that are no longer needed from grunt.
+* [x] replace core `grunt.config` internal module with `grunt-legacy-config`
+* [x] remove any dependencies that are no longer needed from grunt.
 * [ ] enable travis
-* [ ] add travis badge
+* [x] add travis badge
 
 ## Related projects
 
@@ -228,11 +171,19 @@ Pull requests and stars are always welcome. For bugs and feature requests, [plea
 + [github/cowboy](https://github.com/cowboy)
 * [twitter/cowboy](http://twitter.com/cowboy)
 
+## Release history
+
+**DATE**       **VERSION**   **CHANGES**
+
+* 2015-05-12   v0.1.0        first commit
+
 ## License
 
-Copyright (c) 2015 "Cowboy" Ben Alman
+Copyright © 2015 "Cowboy" Ben Alman
 Released under the MIT license.
 
 ***
 
-_This file was generated by [verb-cli](https://github.com/assemble/verb-cli) on May 14, 2015._
+_This file was generated by [verb-cli](https://github.com/assemble/verb-cli) on June 05, 2015._
+
+<!-- deps: verb -->
